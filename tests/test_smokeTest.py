@@ -5,96 +5,87 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
 class TestSmokeTest():
-    def setup_method(self, method):
-        options = Options()
-        options.add_argument("--headless=new")
-        self.driver = webdriver.Chrome(options=options)
-        self.vars = {}
-
-    def teardown_method(self, method):
-        self.driver.quit()
-
-    def test_adminpage(self):
-        self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
-        self.driver.set_window_size(1376, 784)
-        self.driver.find_element(By.LINK_TEXT, "Admin").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".admin-main").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(3)").click()
-        self.driver.find_element(By.ID, "username").click()
-        self.driver.find_element(By.ID, "username").send_keys("a")
-        self.driver.find_element(By.ID, "password").click()
-        self.driver.find_element(By.ID, "password").send_keys("a")
-        self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".login").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(3)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".admin-main").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(2)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".admin-main").click()
-
-    def test_directorypage(self):
-        self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
-        self.driver.set_window_size(1376, 784)
-        self.driver.find_element(By.LINK_TEXT, "Directory").click()
-        self.driver.find_element(By.ID, "directory-grid").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9)").click()
-        self.driver.find_element(By.ID, "directory-list").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9) > p:nth-child(2)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9) > p:nth-child(3)").click()
-
-    def test_homepage(self):
-        self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
-        self.driver.set_window_size(1376, 784)
-        self.driver.find_element(By.CSS_SELECTOR, ".header-logo img").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".header-top").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".header-title > h1").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".main-spotlight").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".spotlight2 > p:nth-child(4)").click()
-        self.driver.find_element(By.ID, "nopad").click()
-
-    def test_joinpage(self):
-        self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
-        self.driver.set_window_size(1376, 784)
-        self.driver.find_element(By.LINK_TEXT, "Join").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".join-wizard-main").click()
-        self.driver.find_element(By.NAME, "fname").click()
-        self.driver.find_element(By.NAME, "fname").send_keys("aaa")
-        self.driver.find_element(By.NAME, "lname").click()
-        self.driver.find_element(By.NAME, "lname").send_keys("aaa")
-        self.driver.find_element(By.NAME, "bizname").click()
-        self.driver.find_element(By.NAME, "bizname").send_keys("aaaa")
-        self.driver.find_element(By.NAME, "biztitle").click()
-        self.driver.find_element(By.NAME, "biztitle").send_keys("aaaa")
-        self.driver.find_element(By.NAME, "submit").click()
-        
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "fieldset"))
-        )
-        
-        self.driver.find_element(By.NAME, "email").click()
-        self.driver.find_element(By.NAME, "email").send_keys("a")
-        self.driver.find_element(By.NAME, "email").click()
-        self.driver.find_element(By.NAME, "email").send_keys("a@gmail.com")
-        self.driver.find_element(By.NAME, "cellphone").click()
-        self.driver.find_element(By.NAME, "cellphone").send_keys("200-200-2000")
-        self.driver.find_element(By.NAME, "submit").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".myradio:nth-child(12)").click()
-        self.driver.find_element(By.NAME, "submit").click()
-        self.driver.find_element(By.NAME, "websiteURL").click()
-        self.driver.find_element(By.NAME, "websiteURL").send_keys("a")
-        self.driver.find_element(By.CSS_SELECTOR, "textarea").click()
-        self.driver.find_element(By.CSS_SELECTOR, "textarea").send_keys("aa")
-        self.driver.find_element(By.NAME, "websiteURL").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(3)").click()
-        self.driver.find_element(By.NAME, "websiteURL").click()
-        self.driver.find_element(By.NAME, "websiteURL").send_keys(
-            "http://127.0.0.1:5500/cse270/teton/1.6/join-step4.html?level=nonprofit&submit=Next+Step&email=a%40gmail.com&cellphone=200-200-2000&submit=Next+Step&fname=aaa&lname=aaa&bizname=aaaa&biztitle=aaaa&submit=Next+Step"
-        )
-        self.driver.find_element(By.NAME, "submit").click()
+  def setup_method(self, method):
+    options = Options()
+    options.add_argument("--headless=new")
+    self.driver = webdriver.Chrome(options=options)
+    self.vars = {}
+  
+  def teardown_method(self, method):
+    self.driver.quit()
+  
+  def test_adminpage(self):
+    self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
+    self.driver.set_window_size(1376, 784)
+    self.driver.find_element(By.LINK_TEXT, "Admin").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".admin-main").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(3)").click()
+    self.driver.find_element(By.ID, "username").click()
+    self.driver.find_element(By.ID, "username").send_keys("a")
+    self.driver.find_element(By.ID, "password").click()
+    self.driver.find_element(By.ID, "password").send_keys("a")
+    self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".login").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(3)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".admin-main").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(2)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".admin-main").click()
+  
+  def test_directorypage(self):
+    self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
+    self.driver.set_window_size(1376, 784)
+    self.driver.find_element(By.LINK_TEXT, "Directory").click()
+    self.driver.find_element(By.ID, "directory-grid").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9)").click()
+    self.driver.find_element(By.ID, "directory-list").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9) > p:nth-child(2)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9)").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".gold-member:nth-child(9) > p:nth-child(3)").click()
+  
+  def test_homepage(self):
+    self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
+    self.driver.set_window_size(1376, 784)
+    self.driver.find_element(By.CSS_SELECTOR, ".header-logo img").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".header-top").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".header-title > h1").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".main-spotlight").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".spotlight2 > p:nth-child(4)").click()
+    self.driver.find_element(By.ID, "nopad").click()
+  
+  def test_joinpage(self):
+    self.driver.get("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
+    self.driver.set_window_size(1376, 784)
+    self.driver.find_element(By.LINK_TEXT, "Join").click()
+    self.driver.find_element(By.CSS_SELECTOR, "fieldset").click()
+    self.driver.find_element(By.NAME, "fname").click()
+    self.driver.find_element(By.NAME, "fname").send_keys("a")
+    self.driver.find_element(By.NAME, "lname").click()
+    self.driver.find_element(By.NAME, "lname").send_keys("a")
+    self.driver.find_element(By.NAME, "bizname").click()
+    self.driver.find_element(By.NAME, "bizname").send_keys("a")
+    self.driver.find_element(By.NAME, "biztitle").click()
+    self.driver.find_element(By.NAME, "biztitle").send_keys("a")
+    self.driver.find_element(By.NAME, "submit").click()
+    self.driver.find_element(By.NAME, "email").click()
+    self.driver.find_element(By.NAME, "email").send_keys("a@gmail.com")
+    self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(2)").click()
+    self.driver.find_element(By.CSS_SELECTOR, "fieldset").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".myinput:nth-child(3)").click()
+    self.driver.find_element(By.NAME, "cellphone").click()
+    self.driver.find_element(By.NAME, "cellphone").send_keys("200-200-2000")
+    self.driver.find_element(By.NAME, "submit").click()
+    self.driver.find_element(By.NAME, "level").click()
+    self.driver.find_element(By.NAME, "submit").click()
+    self.driver.find_element(By.NAME, "websiteURL").click()
+    self.driver.find_element(By.NAME, "websiteURL").send_keys("http://127.0.0.1:5500/cse270/teton/1.6/index.html")
+    self.driver.find_element(By.CSS_SELECTOR, "textarea").click()
+    self.driver.find_element(By.CSS_SELECTOR, "textarea").send_keys("a")
+    self.driver.find_element(By.NAME, "submit").click()
+  
